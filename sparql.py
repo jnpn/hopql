@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pprint import pprint
-from grako import parse
+from grako import compile
 
 ######################################################################## GRAMMAR
 
@@ -99,11 +99,12 @@ def test():
         print('input DSL:')
         print(src)
         sem = SparqlSemantics()
-        ast = parse(SPARQL,
-                    src,
-                    eol_comments_re="#.*?$",
-                    semantics=sem,
-                    nameguard=False)
+        g = compile(SPARQL)
+        ast = g.parse(src,
+                      eol_comments_re="#.*?$",
+                      semantics=sem,
+                      nameguard=False
+        )
         print('output AST:')
         pprint(ast)
         return ast
