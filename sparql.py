@@ -1,3 +1,4 @@
+from pprint import pprint
 from grako import parse
 
 SPARQL = '''
@@ -6,7 +7,11 @@ SPARQL = '''
 start = query $ ;
 
 query
-   = select:select [where:where] [orderby:orderby] [limit:limit] [offset:offset]
+   = select:select
+     [where:where]
+     [orderby:orderby]
+     [limit:limit]
+     [offset:offset]
    ;
 
 select = 'SELECT' vars
@@ -52,3 +57,13 @@ limit = 'LIMIT' int ;
 
 offset = 'OFFSET' int ;
 '''
+
+SAMPLE = 'sparql.dsl'
+def test():
+    with open(SAMPLE) as dsl:
+        src = dsl.read()
+        print('input DSL:')
+        print(src)
+        ast = parse(SPARQL, src, eol_comments_re="#.*?$")
+        print('output AST:')
+        pprint(ast)
