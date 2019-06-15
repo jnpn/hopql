@@ -38,15 +38,15 @@ object = var | constant ;
 
 var = '?' @:/\w+/;
 
-constant = str | int ; # | float ;
+constant = str | float | int ;
 
 str = /"[^"]*"/ ;
 int = /\d+/ ;
-#+TODO: Fix float parsing in clause.
-# float = int [frac] [exp] ;
-# frac = '.' int ;
-# exp = e int ;
-# e = ('e'|'E') ('+'|'-') ;
+
+float = int frac exp ;
+frac = '.' int ;
+exp = e int ;
+e = [('e'|'E')] [('+'|'-')] ;
 
 predicate = /\w+/ ;
 
@@ -84,6 +84,11 @@ class SparqlSemantics:
         return Var(v)
     def int(self, i):
         return Int(int(i))
+    def float(self, t):
+        i,[_,f],[_,e] = t
+        # dont judge this method
+        sf = str(i.int) + '.' + str(f.int) + 'e' + str(e.int)
+        return Float(float(sf))
 
 ######################################################################## MAIN
 
@@ -94,7 +99,11 @@ def test():
         print('input DSL:')
         print(src)
         sem = SparqlSemantics()
-        ast = parse(SPARQL, src, eol_comments_re="#.*?$", semantics=sem)
+        ast = parse(SPARQL,
+                    src,
+                    eol_comments_re="#.*?$",
+                    semantics=sem,
+                    nameguard=False)
         print('output AST:')
         pprint(ast)
         return ast
