@@ -64,7 +64,6 @@ offset = 'OFFSET' @:int ;
 
 ######################################################################## CLASSES
 
-# Select, Where, Offset, Limit, Clause, Var, Int, Float, Str
 Select = namedtuple('Select', 'vars')
 Where = namedtuple('Where', 'clauses options')
 Offset = namedtuple('Offset', 'offset')
