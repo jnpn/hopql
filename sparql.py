@@ -1,3 +1,4 @@
+from collections import namedtuple
 from pprint import pprint
 from grako import parse
 
@@ -60,6 +61,31 @@ limit = 'LIMIT' @:int ;
 offset = 'OFFSET' @:int ;
 '''
 
+
+######################################################################## CLASSES
+
+# Select, Where, Offset, Limit, Clause, Var, Int, Float, Str
+Select = namedtuple('Select', 'vars')
+Where = namedtuple('Where', 'clauses options')
+Offset = namedtuple('Offset', 'offset')
+Limit = namedtuple('Limit', 'limit')
+Clause = namedtuple('Clause', 'left pred right')
+Predicate = namedtuple('Predicate', 'pred')
+Var = namedtuple('Var', 'var')
+Int = namedtuple('Int', 'int')
+Float = namedtuple('Float', 'float')
+Str = namedtuple('Str', 'str')
+
+class SparqlSemantics:
+    def predicate(self, n):
+        return Predicate(n)
+    def str(self, s):
+        return Str(s[1:-1])
+    def var(self, v):
+        return Var(v)
+    def int(self, i):
+        return Int(int(i))
+
 ######################################################################## MAIN
 
 SAMPLE = 'sparql.dsl'
@@ -68,7 +94,8 @@ def test():
         src = dsl.read()
         print('input DSL:')
         print(src)
-        ast = parse(SPARQL, src, eol_comments_re="#.*?$")
+        sem = SparqlSemantics()
+        ast = parse(SPARQL, src, eol_comments_re="#.*?$", semantics=sem)
         print('output AST:')
         pprint(ast)
         return ast
