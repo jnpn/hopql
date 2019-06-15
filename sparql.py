@@ -67,3 +67,4 @@ def test():
         ast = parse(SPARQL, src, eol_comments_re="#.*?$")
         print('output AST:')
         pprint(ast)
+        return ast
