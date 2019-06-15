@@ -14,15 +14,15 @@ query
      [offset:offset]
    ;
 
-select = 'SELECT' vars
+select = 'SELECT' @:vars
   ;
 
 vars = @+:var {',' @+:var}*
   ;
 
 where =
-  | 'WHERE' '{' [clauses] '}'
-  | 'WHERE' '{' [clauses options] '}'
+  | 'WHERE' '{' [clauses:clauses] '}'
+  | 'WHERE' '{' [clauses:clauses options:options] '}'
   ;
 
 clauses = @+:clause {'.' @+:clause}*
@@ -49,13 +49,13 @@ predicate = /\w+/ ;
 
 options = {option}+ ;
 
-option = 'OPTIONAL' '(' clause ')' ;
+option = 'OPTIONAL' '(' @:clause ')' ;
 
-orderby = 'ORDER BY' vars ;
+orderby = 'ORDER BY' @:vars ;
 
-limit = 'LIMIT' int ;
+limit = 'LIMIT' @:int ;
 
-offset = 'OFFSET' int ;
+offset = 'OFFSET' @:int ;
 '''
 
 SAMPLE = 'sparql.dsl'
