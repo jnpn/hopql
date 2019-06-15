@@ -1,6 +1,8 @@
 from pprint import pprint
 from grako import parse
 
+######################################################################## GRAMMAR
+
 SPARQL = '''
 @@grammar::Sparql
 
@@ -57,6 +59,8 @@ limit = 'LIMIT' @:int ;
 
 offset = 'OFFSET' @:int ;
 '''
+
+######################################################################## MAIN
 
 SAMPLE = 'sparql.dsl'
 def test():
