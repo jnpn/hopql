@@ -4,7 +4,7 @@ from grako import compile
 
 ######################################################################## GRAMMAR
 
-SPARQL = '''
+SPARQL = r'''
 @@grammar::Sparql
 
 start = query $ ;
