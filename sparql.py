@@ -93,8 +93,9 @@ class SparqlSemantics:
 ######################################################################## MAIN
 
 SAMPLE = 'sparql.dsl'
-def test():
-    with open(SAMPLE) as dsl:
+
+def test(s=SAMPLE):
+    with open(s) as dsl:
         src = dsl.read()
         print('input DSL:')
         print(src)
